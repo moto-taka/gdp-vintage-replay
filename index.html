@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>What did we know on April 25?</title>
+<style>
+:root{font:17px/1.55 "Inter",system-ui,sans-serif;color:#152a37;background:#fbfaf6}
+*{box-sizing:border-box}body{max-width:760px;margin:6vh auto;padding:0 24px 36px}h1{font:600 clamp(2.3rem,7vw,3.8rem)/1.06 Georgia,serif;letter-spacing:-.04em;margin:0 0 16px}
+h2{font-size:1.16rem;margin:1.5em 0 .4em}p{margin:.5em 0 1em}button,select{font:inherit}select{padding:.48em;max-width:100%}label{display:block;margin:.7em 0}output{display:block;background:#e8f2ea;border-left:4px solid #27714e;padding:18px 20px;margin-top:1.2em}#number{font:600 2rem/1.1 Georgia,serif;display:block;margin-bottom:8px}a{color:#155944}small{color:#455963}input{width:18px;height:18px;vertical-align:middle}li{margin:.45em 0}
+</style>
+<main>
+<h1>What did we know on April 25?</h1>
+<p>A historical signal turns on when US real GDP growth exceeds 1.5%. Rewind the release clock to see which value a researcher could have used.</p>
+<label for="when">Decision time in New York</label>
+<select id="when">
+<option value="2024-04-25T08:29:00-04:00">April 25, 2024 · 8:29 a.m.</option>
+<option selected value="2024-04-25T08:30:00-04:00">April 25, 2024 · 8:30 a.m.</option>
+<option value="2024-05-30T08:30:00-04:00">May 30, 2024 · 8:30 a.m.</option>
+<option value="2024-06-27T08:30:00-04:00">June 27, 2024 · 8:30 a.m.</option>
+</select>
+<label><input type="checkbox" id="missing"> Use an uploaded row with no release evidence</label>
+<output aria-live="polite"><span id="number"></span><span id="result"></span></output>
+<p id="evidence"></p>
+<h2>Check the releases</h2>
+<p>Each estimate describes the same quarter. The US Bureau of Economic Analysis published each revision at a different time. Values are annualized real growth rates.</p>
+<ul>
+<li><a href="https://www.bea.gov/news/2024/gross-domestic-product-first-quarter-2024-advance-estimate">April 25 · Advance estimate</a> · 1.6%</li>
+<li><a href="https://www.bea.gov/news/2024/gross-domestic-product-first-quarter-2024-second-estimate-and-corporate-profits">May 30 · Second estimate</a> · 1.3%</li>
+<li><a href="https://www.bea.gov/news/2024/gross-domestic-product-third-estimate-and-gdp-industry">June 27 · Third estimate</a> · 1.4%</li>
+</ul>
+<noscript><p>At 8:29 a.m. on April 25 the Q1 estimate was unpublished. The signal turned on at 8:30 when BEA released 1.6%. It turned off after the May revision and stayed off in June. A row without release evidence yields Unknown.</p></noscript>
+</main>
+<script>
+const releases = [
+  {time:'2024-04-25T08:30:00-04:00', rate:1.6, title:'April 25 · Advance estimate', url:'https://www.bea.gov/news/2024/gross-domestic-product-first-quarter-2024-advance-estimate'},
+  {time:'2024-05-30T08:30:00-04:00', rate:1.3, title:'May 30 · Second estimate', url:'https://www.bea.gov/news/2024/gross-domestic-product-first-quarter-2024-second-estimate-and-corporate-profits'},
+  {time:'2024-06-27T08:30:00-04:00', rate:1.4, title:'June 27 · Third estimate', url:'https://www.bea.gov/news/2024/gross-domestic-product-third-estimate-and-gdp-industry'}
+];
+const byId = id => document.getElementById(id);
+function link(release) {
+  const a = document.createElement('a');
+  a.textContent = release.title;
+  a.href = release.url;
+  return a;
+}
+function inspect(time, unverified) {
+  if (unverified) return {number:'Unknown', result:'Release evidence is missing. This decision is excluded from the verified results.'};
+  const release = releases.filter(row => Date.parse(row.time) <= Date.parse(time)).at(-1);
+  if (!release) return {number:'Unpublished', result:'No estimate for this quarter had been released. The rule cannot be evaluated.'};
+  return {number:release.rate.toFixed(1)+'%', result:release.rate>1.5?'Signal on. GDP growth exceeds 1.5%.':'Signal off. GDP growth is at or below 1.5%.',release};
+}
+function render() {
+  const state = inspect(byId('when').value, byId('missing').checked);
+  byId('number').textContent = state.number;
+  byId('result').textContent = state.result;
+  byId('evidence').replaceChildren();
+  if (state.release) byId('evidence').append('Evidence: ',link(state.release));
+}
+byId('when').addEventListener('change',render);
+byId('missing').addEventListener('change',render);
+render();
+</script>
+</html>
