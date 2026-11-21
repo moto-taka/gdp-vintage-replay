@@ -26,7 +26,7 @@ h2{font-size:1.16rem;margin:1.5em 0 .4em}p{margin:.5em 0 1em}button,select{font:
 <ul>
 <li><a href="https://www.bea.gov/news/2024/gross-domestic-product-first-quarter-2024-advance-estimate">April 25 · Advance estimate</a> · 1.6%</li>
 <li><a href="https://www.bea.gov/news/2024/gross-domestic-product-first-quarter-2024-second-estimate-and-corporate-profits">May 30 · Second estimate</a> · 1.3%</li>
-<li><a href="https://www.bea.gov/news/2024/gross-domestic-product-third-estimate-and-gdp-industry">June 27 · Third estimate</a> · 1.4%</li>
+<li><a href="https://www.bea.gov/news/2024/gross-domestic-product-third-estimate-corporate-profits-revised-estimate-and-gdp-industry">June 27 · Third estimate</a> · 1.4%</li>
 </ul>
 <noscript><p>At 8:29 a.m. on April 25 the Q1 estimate was unpublished. The signal turned on at 8:30 when BEA released 1.6%. It turned off after the May revision and stayed off in June. A row without release evidence yields Unknown.</p></noscript>
 </main>
@@ -34,7 +34,7 @@ h2{font-size:1.16rem;margin:1.5em 0 .4em}p{margin:.5em 0 1em}button,select{font:
 const releases = [
   {time:'2024-04-25T08:30:00-04:00', rate:1.6, title:'April 25 · Advance estimate', url:'https://www.bea.gov/news/2024/gross-domestic-product-first-quarter-2024-advance-estimate'},
   {time:'2024-05-30T08:30:00-04:00', rate:1.3, title:'May 30 · Second estimate', url:'https://www.bea.gov/news/2024/gross-domestic-product-first-quarter-2024-second-estimate-and-corporate-profits'},
-  {time:'2024-06-27T08:30:00-04:00', rate:1.4, title:'June 27 · Third estimate', url:'https://www.bea.gov/news/2024/gross-domestic-product-third-estimate-and-gdp-industry'}
+  {time:'2024-06-27T08:30:00-04:00', rate:1.4, title:'June 27 · Third estimate', url:'https://www.bea.gov/news/2024/gross-domestic-product-third-estimate-corporate-profits-revised-estimate-and-gdp-industry'}
 ];
 const byId = id => document.getElementById(id);
 function link(release) {
